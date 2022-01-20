@@ -1,0 +1,131 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto+Slab:wght@300;500&family=Source+Sans+Pro:wght@600&display=swap');
+.main {
+    min-height: 95vh;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    border: 5px solid;
+    border-radius: 20px;
+    padding: 20px;
+    padding-top: 5px;
+    background: #4cbff5;
+}
+
+/* Calculator Screen & Logo Start */
+
+.calculator-head {
+    padding-bottom: 1rem;
+}
+
+.calculator-head-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+.calculator-cell {
+    display: flex;
+    width: 6em;
+    height: 1.5em;
+    background: black;
+    border-radius: 5px;
+}
+#end {
+    border: none;
+}
+
+.cell {
+    flex-grow: 1;
+    border-right: 1px solid white;
+}
+
+.calculator-screen {
+    height: 5rem ;
+    background : #d5dfdc;
+    border: 1px solid black;
+    display: flex;
+    justify-content: right;
+    align-items:flex-end;
+
+}
+
+.calculator-text {
+    font-family: 'Orbitron', sans-serif;
+    text-align: right;
+    font-size: 46px;
+    margin: 0 5px;
+    overflow: hidden;
+}
+/* Calculator Screen & Logo End */
+
+
+/* Calculator Buttons Start */
+
+.calculator-body {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+
+.button-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    
+}
+
+.button {
+    font-family: 'Roboto Slab', serif;
+    font-weight: bold;
+    height: 55px;
+    width: 65px;
+    margin: 2px;
+    /* border: 1px black solid; */
+    border-radius: 10px;
+    z-index: 99999;
+    background: #4cbff5;
+    border: 1px solid black;
+    box-shadow: 2px 2px;
+    font-size: 1.5em;
+    
+}
+
+.button:hover {
+    background-color:rgb(76, 135, 245);
+}
+
+.button-large {
+    flex-grow: 2;
+    font-size: 2em;;
+}
+
+.button-small {
+    height: 30px;
+    font-size: smaller;
+}
+
+.clear-button {
+    background: rgb(76, 135, 245);
+
+}
+
+.clear-button:hover {
+    background: #4cbff5;
+}
+
+.defunct:hover {
+    cursor: not-allowed;
+};
+
+/* Calculator Body End */
