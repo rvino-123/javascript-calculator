@@ -1,6 +1,0 @@
-If user selects a number button, concatinate the number to the existing screen. 
-If user selects an operator after selecting two numbers and previous operator, perform the operation
-if user selects an operator after only choosing one number, erase the screen and store the number and operator
-if user selects the equals sign, perform operation if operator and two numbers are stored. 
-if user selects "AC" clear the screen and clear stored variables. 
-if user selects "C", clear last number

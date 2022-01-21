@@ -1,12 +1,15 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto+Slab:wght@300;500&family=Source+Sans+Pro:wght@600&display=swap');
+
+html {
+    background: rgb(197, 197, 197);
+
+}
 .main {
     min-height: 95vh;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .container {
@@ -17,6 +20,8 @@
     padding: 20px;
     padding-top: 5px;
     background: #4cbff5;
+    overflow: hidden;
+    width: 22rem;
 }
 
 /* Calculator Screen & Logo Start */
@@ -57,15 +62,15 @@
     display: flex;
     justify-content: right;
     align-items:flex-end;
-
+    overflow: hidden;
 }
 
 .calculator-text {
     font-family: 'Orbitron', sans-serif;
     text-align: right;
-    font-size: 46px;
+    font-size: 42px;
     margin: 0 5px;
-    overflow: hidden;
+    text-overflow: hidden;
 }
 /* Calculator Screen & Logo End */
 
@@ -101,10 +106,6 @@
     
 }
 
-.button:hover {
-    background-color:rgb(76, 135, 245);
-}
-
 .button-large {
     flex-grow: 2;
     font-size: 2em;;
@@ -120,8 +121,13 @@
 
 }
 
-.clear-button:hover {
-    background: #4cbff5;
+.button:active {
+    background: #a7e0fa;
+}
+
+.clear-button:active {
+    background: rgb(141, 177, 245);
+
 }
 
 .defunct:hover {

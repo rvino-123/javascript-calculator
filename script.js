@@ -61,6 +61,12 @@ function updateScreen(e) {
     } else if (targetValue == 'int') {
         var result = Number(calculatorText.innerText) * -1;
         calculatorText.innerText = result;
+        
+        if (InMemStorage['a'] && !InMemStorage['b']) {
+            InMemStorage['a'] = result;
+        } else if (InMemStorage['a'] && InMemStorage['b']) {
+            InMemStorage['b'] = result;
+        }
         return;
 
     } else if (targetValue == 'decimal') {
@@ -113,6 +119,12 @@ function multiply(a,b) {
 }
 function divide(a,b) {
     return a / b;
+}
+function raisePower(a,b) {
+    return a ** b;
+}
+function squareRoot(a) {
+    return squareRoot(a);
 }
 
 window.addEventListener('click', updateScreen)
