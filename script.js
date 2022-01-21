@@ -1,7 +1,6 @@
 // Global Variables
 const buttons = Array.from(document.querySelectorAll('.button'));
 const calculatorText = document.querySelector('.calculator-text');
-const equalsButton = document.getElementById('equals');
 
 // Calculator Storage
 var InMemStorage = {
@@ -10,86 +9,133 @@ var InMemStorage = {
     operator : ''
 }
 
-// Maps symbols to functions
-const operatorMap = {
-    '+' : add,
-    '-' : subtract,
-    'x' : multiply,
-    '/' : divide
-}
-
 // Update Screen From Button Pressing (MAIN FUNCTION)
 function updateScreen(e) {
     const targetValue = e.target.value ? e.target.value: "";
-    if (targetValue == "=") {
-        if (!InMemStorage['a'] || !InMemStorage['b'] || !InMemStorage['operator']) {
-            // Incomplete Equation returns nothing when selecting equals button
-            return;
-        } else {
-            // Displays Result
-            calculatorText.innerText = operate(operatorMap[InMemStorage['operator']], Number(InMemStorage['a']), Number(InMemStorage['b']))
-            
-            // Stores the Answer, clears rest of variables
-            updateStorage(a=calculatorText.innerText)
-            return;
-        }
-        // Check If event value match the keys of the operator map
-    } else if (Object.keys(operatorMap).indexOf(targetValue) != -1) {
-            
-        // If at least one variable is empty in memory, then this adds/overrides currently selected operator       
-        if (!InMemStorage['a'] || !InMemStorage['b'] || !InMemStorage['operator']) {
-            InMemStorage['operator'] = targetValue;
-            calculatorText.innerText=''
-            
-        } else {
-            calculatorText.innerText = operate(operatorMap[InMemStorage['operator']], Number(InMemStorage['a']), Number(InMemStorage['b']));
-            updateStorage(a=calculatorText.innerText)
-            return;
+    
+    switch(targetValue) {
+        case "=":
+            if (!InMemStorage['a'] || !InMemStorage['b'] || !InMemStorage['operator']) {
+                break;
+            } else {
+                calculatorText.innerText = operate(window[InMemStorage['operator']], Number(InMemStorage['a']), Number(InMemStorage['b']));
+                updateStorage(a=calculatorText.innerText);
+                break;
+                }
 
-        }
-        // Clear Button
-    } else if (targetValue == 'ac') {
-        calculatorText.innerText = "0";
-        updateStorage();
-        return;
-    
-        // Remove last number
-    } else if (targetValue == 'c') {
-        calculatorText.innerText = calculatorText.innerText.slice(0,-1);
-        return;
-    
-    } else if (targetValue == 'int') {
-        var result = Number(calculatorText.innerText) * -1;
-        calculatorText.innerText = result;
+        case "add":
+            OperatorButton(add, targetValue);
+            break;
         
-        if (InMemStorage['a'] && !InMemStorage['b']) {
-            InMemStorage['a'] = result;
-        } else if (InMemStorage['a'] && InMemStorage['b']) {
-            InMemStorage['b'] = result;
-        }
-        return;
+        case "subtract":
+            OperatorButton(subtract, targetValue);
+            break;    
 
-    } else if (targetValue == 'decimal') {
-        var result = Number(operate(divide, calculatorText.innerText, 100));
-        calculatorText.innerText = result;
-        return;
-    
-    } else {
-        if (calculatorText.innerText == '0') 
-        {
-            calculatorText.innerText = '';
-        }
-        calculatorText.innerText = calculatorText.innerText.concat(targetValue);
+        case "multiply":
+            OperatorButton(multiply, targetValue);
+            break;
         
-        if (!InMemStorage['operator']) {
-            InMemStorage['a'] = calculatorText.innerText;
+        case "divide":
+            OperatorButton(divide, targetValue);
+            break;
         
-        } else {
-            InMemStorage['b'] = calculatorText.innerText;
-        }
+        case "ac":
+            calculatorText.innerText = "0";
+            updateStorage();
+            break;
+        
+        case "c":
+            calculatorText.innerText = calculatorText.innerText.slice(0,-1);
+            if (!calculatorText.innerText) {
+                calculatorText.innerText = '0'
+            }
+            break;
+        
+        case "int":
+            var result = Number(calculatorText.innerText) * -1;
+            calculatorText.innerText = result;
+            
+            if (InMemStorage['a'] && !InMemStorage['b']) {
+                InMemStorage['a'] = result;
+            } else if (InMemStorage['a'] && InMemStorage['b']) {
+                InMemStorage['b'] = result;
+            }
+            break;
+        
+        case "percent":
+            var result = Number(operate(divide, calculatorText.innerText, 100));
+            calculatorText.innerText = result;
+            
+            if (InMemStorage['a'] && !InMemStorage['b']) {
+                InMemStorage['a'] = result;
+            } else if (InMemStorage['a'] && InMemStorage['b']) {
+                InMemStorage['b'] = result;
+            }
+            break;
+        
+        case "decimal":
+            if (!calculatorText.innerText.includes(".")) {
+                calculatorText.innerText = calculatorText.innerText.concat(".");
+            }
+            break;
+
+        case "sqr":
+            var result = calculatorText.innerText ** 2;
+            calculatorText.innerText = result;
+            
+            if (InMemStorage['a'] && !InMemStorage['b']) {
+                InMemStorage['a'] = result;
+            } else if (InMemStorage['a'] && InMemStorage['b']) {
+                InMemStorage['b'] = result;
+            }
+            break;
+        
+        case "sqrt": 
+            var result = getSquareRoot(calculatorText.innerText);
+            calculatorText.innerText = result;
+        
+            if (InMemStorage['a'] && !InMemStorage['b']) {
+                InMemStorage['a'] = result;
+            } else if (InMemStorage['a'] && InMemStorage['b']) {
+                InMemStorage['b'] = result;
+            }
+            break;
+        
+        case "pow":
+            var power = prompt("Please select what power you want to raise the number to: ")
+            if (typeof(power) != "number") {
+                power = prompt("Please select a valid number. ")
+            }
+            
+            var result = raisePower(calculatorText.innerText, power);
+            calculatorText.innerText = result;
+
+            if (InMemStorage['a'] && !InMemStorage['b']) {
+                InMemStorage['a'] = result;
+            } else if (InMemStorage['a'] && InMemStorage['b']) {
+                InMemStorage['b'] = result;
+            }
+            break;
+        
+        default:
+            if (calculatorText.innerText == '0') 
+            {
+                calculatorText.innerText = '';
+            }
+            calculatorText.innerText = calculatorText.innerText.concat(targetValue);
+            
+            if (!InMemStorage['operator']) {
+                InMemStorage['a'] = calculatorText.innerText;
+            
+            } else {
+                InMemStorage['b'] = calculatorText.innerText;
+            }
     }
 }
-// Helper Functions
+
+// HELPER FUNCTIONS START
+
+// updates calculator storage (erases by default)
 function updateStorage(a='',b='', operator='') {
     InMemStorage['a'] = a;
     InMemStorage['b'] = b;
@@ -107,6 +153,18 @@ function operate(operator, a, b) {
     
 }
 
+// Is called when operator button (+,- etc..) is clicked
+function OperatorButton(operatorFunction, targetValue) {
+    if (!InMemStorage['a'] || !InMemStorage['b'] || !InMemStorage['operator']) {
+        InMemStorage['operator'] = targetValue;
+        calculatorText.innerText=''
+    
+    } else {
+        calculatorText.innerText = operate(operatorFunction, Number(InMemStorage['a']), Number(InMemStorage['b']));
+        updateStorage(a=calculatorText.innerText)
+    }
+}
+
 // Mathematical Functions
 function add(a,b) {
     return a + b;
@@ -121,12 +179,17 @@ function divide(a,b) {
     return a / b;
 }
 function raisePower(a,b) {
-    return a ** b;
+    var result = a ** b;
+    if (Number.isInteger(result)) {
+        return result
+    } else {
+        return result.toFixed(5);
+    }
 }
-function squareRoot(a) {
-    return squareRoot(a);
+function getSquareRoot(a) {
+    return Math.sqrt(a).toFixed(5);
 }
 
-window.addEventListener('click', updateScreen)
+// HELPER FUNCTIONS END
 
-
+buttons.forEach(button => button.addEventListener('click', updateScreen));
